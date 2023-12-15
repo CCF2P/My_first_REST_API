@@ -17,8 +17,8 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
-@app.get("/")
-def root():
+@app.get("/todo")
+def get_todo_user_id():
     db = SessionLocal()
     res = db.query(ToDo).all()
     db.close()
@@ -37,7 +37,7 @@ def add_user(data: UserCreate):
     return data
 
 
-@app.put("/todo/update/{user_id}")
+@app.put("/todo/{user_id}")
 def update_todo_user_id(user_id: int, data: UserCreate):
     db = SessionLocal()
 
@@ -52,19 +52,7 @@ def update_todo_user_id(user_id: int, data: UserCreate):
     return {"message": "change is complete"}
 
 
-@app.get("/todo/{user_id}")
-def get_todo_user_id(user_id: int):
-    db = SessionLocal()
-
-    user = db.query(ToDo).filter(ToDo.id == user_id).first()
-    if user == None:
-        return JSONResponse(status_code=404, content={"message": "User is not found"})
-    
-    db.close()
-    return user
-
-
-@app.delete("/todo/delete/{user_id}")
+@app.delete("/todo/{user_id}")
 def delete_todo_user_id(user_id: int):
     db = SessionLocal()
 
