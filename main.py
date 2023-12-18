@@ -2,14 +2,7 @@ from database import *
 from sqlalchemy.orm import Session
 from fastapi import Depends, Body, FastAPI, status, HTTPException
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
-
-
-class UserCreate(BaseModel):
-    #id: int
-    name: str
-    task: str
-
+from model import UserCreate
 
 # create tables
 Base.metadata.create_all(bind=engine)
