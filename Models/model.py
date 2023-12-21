@@ -6,5 +6,7 @@ class UserCreate(BaseModel):
     name: str
     task: str
 
-class AuthKeycloak(BaseModel):
-    pass
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str

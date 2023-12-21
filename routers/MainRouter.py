@@ -2,6 +2,7 @@ from fastapi.responses import JSONResponse
 from fastapi import APIRouter
 
 from DataBase.database import *
+from DataBase.Schemas.schemas import *
 from Models.model import UserCreate
 
 
