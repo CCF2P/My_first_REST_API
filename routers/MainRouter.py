@@ -1,9 +1,10 @@
 from fastapi.responses import JSONResponse
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from DataBase.database import *
 from DataBase.Schemas.schemas import *
 from Models.model import UserCreate
+from Models.model import KeycloakJWTBearerHandler
 
 
 # create tables
@@ -20,7 +21,7 @@ def get_todo_user_id():
     return res
 
 
-@router.post("/user")
+@router.post("/user", dependencies=[Depends(KeycloakJWTBearerHandler())])
 def add_user(data: UserCreate):
     db = SessionLocal()
 
@@ -32,7 +33,7 @@ def add_user(data: UserCreate):
     return data
 
 
-@router.put("/todo/{user_id}")
+@router.put("/todo/{user_id}", dependencies=[Depends(KeycloakJWTBearerHandler())])
 def update_todo_user_id(user_id: int, data: UserCreate):
     db = SessionLocal()
 
@@ -47,7 +48,7 @@ def update_todo_user_id(user_id: int, data: UserCreate):
     return {"message": "change is complete"}
 
 
-@router.delete("/todo/{user_id}")
+@router.delete("/todo/{user_id}", dependencies=[Depends(KeycloakJWTBearerHandler())])
 def delete_todo_user_id(user_id: int):
     db = SessionLocal()
 
