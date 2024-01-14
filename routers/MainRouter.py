@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from DataBase.database import *
 from DataBase.Schemas.schemas import *
 from Models.model import UserCreate
-from Models.model import KeycloakJWTBearerHandler
+from Authorization.authorization import KeycloakJWTBearerHandler
 
 
 # create tables
