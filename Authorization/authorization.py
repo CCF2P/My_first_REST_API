@@ -63,9 +63,9 @@ class KeycloakJWTBearerHandler(HTTPBearer):
     def _decode_jwt(token):        
         header = jwt.get_unverified_header(token)
         data = jwt.decode(jwt=token,
-                        key="secret",
-                        algorithms=[ALGORITHM],
-                        options={"verify_signature": False},)
+                          key="secret",
+                          algorithms=[ALGORITHM],
+                          options={"verify_signature": False},)
         
         payload = json.loads(json.dumps(data))
 
