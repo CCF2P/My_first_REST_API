@@ -1,8 +1,8 @@
 from fastapi.responses import JSONResponse
 from fastapi import APIRouter, Depends
 
-from DataBase.database import *
-from DataBase.Schemas.schemas import *
+from DataBase.database import SessionLocal, engine
+from DataBase.Schemas.schemas import ToDo, Base
 from Models.model import UserCreate
 from Authorization.authorization import KeycloakJWTBearerHandler
 
@@ -38,9 +38,9 @@ def update_todo_user_id(user_id: int, data: UserCreate):
     db = SessionLocal()
 
     user = db.query(ToDo).filter(ToDo.id == user_id).first()
-    if user == None:
+    if user is None:
         return JSONResponse(status_code=404, content={"message": "User is not found"})
-    
+        
     user.task = data.task
     db.commit()
 
@@ -53,7 +53,7 @@ def delete_todo_user_id(user_id: int):
     db = SessionLocal()
 
     user = db.query(ToDo).filter(ToDo.id == user_id).first()
-    if user == None:
+    if user is None:
         return JSONResponse(status_code=404, content={"message": "User is not found"})
     
     db.delete(user)
